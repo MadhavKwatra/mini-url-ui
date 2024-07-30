@@ -1,6 +1,6 @@
 import CopyToClipboard from "react-copy-to-clipboard";
 
-const CopyToClipboardComponent = () => {
+const CopyToClipboardComponent = (props) => {
   // eslint-disable-next-line no-undef
   const { text, onCopy } = props;
   return (
