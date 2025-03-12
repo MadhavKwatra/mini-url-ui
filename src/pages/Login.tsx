@@ -17,16 +17,19 @@ const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    mode: "onChange",
   });
 
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      const from = (location.state as any)?.from?.pathname || "/dashboard";
-      navigate(from, { replace: true });
+      setTimeout(() => {
+        const from = (location.state as any)?.from?.pathname || "/dashboard";
+        navigate(from, { replace: true });
+      }, 1500);
     }
 
     // Clear any previous errors when component mounts
@@ -50,34 +53,32 @@ const Login: React.FC = () => {
               Or{" "}
               <Link
                 to="/signup"
-                className="font-medium text-primary-600 hover:text-primary-500"
+                className="font-medium text-primary-600 hover:text-primary-500 text-lg"
               >
-                sign up for a new account
+                create a new account
               </Link>
             </p>
           </div>
           <FormError error={error} />
           <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div className="rounded-md shadow-sm -space-y-px">
-              <Input
-                id="email"
-                type="email"
-                label="Email address"
-                placeholder="Email address"
-                autoComplete="email"
-                {...register("email")}
-                error={errors.email?.message}
-              />
-              <Input
-                id="password"
-                type="password"
-                label="Password"
-                placeholder="Password"
-                autoComplete="current-password"
-                {...register("password")}
-                error={errors.password?.message}
-              />
-            </div>
+            <Input
+              id="email"
+              type="email"
+              label="Email address"
+              placeholder="Email address"
+              autoComplete="email"
+              {...register("email")}
+              error={errors.email?.message}
+            />
+            <Input
+              id="password"
+              type="password"
+              label="Password"
+              placeholder="Password"
+              autoComplete="current-password"
+              {...register("password")}
+              error={errors.password?.message}
+            />
 
             <div className="flex items-center justify-between">
               <div className="text-sm">
@@ -91,8 +92,13 @@ const Login: React.FC = () => {
             </div>
 
             <div>
-              <Button type="submit" isLoading={isLoading} className="w-full">
-                Log in
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="w-full"
+                disabled={isLoading || !isValid}
+              >
+                {isLoading ? "Logging in..." : "Log in"}
               </Button>
             </div>
           </form>

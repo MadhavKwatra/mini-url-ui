@@ -12,9 +12,10 @@ export const authService = {
    */
   signup: async (
     credentials: SignupCredentials
-  ): Promise<{ data: User; message: string }> => {
+  ): Promise<{ data: User; message: string; status: number }> => {
     const response = await api.post("/auth/sign-up", credentials);
-    return response.data;
+
+    return { ...response.data, status: response.status };
   },
 
   /**
@@ -22,9 +23,19 @@ export const authService = {
    */
   login: async (
     credentials: LoginCredentials
-  ): Promise<{ data: User; message: string }> => {
+  ): Promise<{ data: User; message: string; status: number }> => {
     const response = await api.post("/auth/log-in", credentials);
-    return response.data;
+    return { ...response.data, status: response.status };
+  },
+
+  /**
+   * Verify user email
+   */
+  verifyEmail: async (
+    token: string
+  ): Promise<{ message: string; status: number }> => {
+    const response = await api.post("/auth/verify-email", { token });
+    return { ...response.data, status: response.status };
   },
 
   /**

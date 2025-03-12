@@ -11,8 +11,8 @@ import Navbar from "../components/layout/Navbar";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import FormError from "../components/common/FormError";
+import toast from "react-hot-toast";
 
-// TODO: Test this functionality
 const ForgotPassword: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,9 +21,10 @@ const ForgotPassword: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
+    mode: "onChange",
   });
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
@@ -32,10 +33,11 @@ const ForgotPassword: React.FC = () => {
       setError(null);
       setSuccessMessage(null);
 
-      await authService.forgotPassword(data.email);
+      const response = await authService.forgotPassword(data.email);
       setSuccessMessage(
         "If an account with this email exists, we have sent instructions to reset your password."
       );
+      toast.success(response.message, { duration: 3000 });
     } catch (err) {
       // We don't show specific errors for security reasons
       setSuccessMessage(
@@ -95,25 +97,26 @@ const ForgotPassword: React.FC = () => {
             </div>
           ) : (
             <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              <div className="rounded-md shadow-sm -space-y-px">
-                <Input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="Email address"
-                  {...register("email")}
-                  error={errors.email?.message}
-                />
-              </div>
+              <Input
+                id="email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="Email address"
+                {...register("email")}
+                error={errors.email?.message}
+              />
 
               {error && <FormError error={error} />}
 
-              <div>
-                <Button type="submit" isLoading={isLoading}>
-                  Send reset instructions
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                disabled={isLoading || !isValid}
+                className="w-full"
+              >
+                {isLoading ? "Sending..." : "Send reset instructions"}
+              </Button>
 
               <div className="flex items-center justify-center">
                 <Link

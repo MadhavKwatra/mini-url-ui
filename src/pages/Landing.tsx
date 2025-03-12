@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
 
 const Landing: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const Landing: React.FC = () => {
               <div className="rounded-md shadow">
                 <Link
                   to="/signup"
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 md:py-4 md:text-lg md:px-10"
+                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white! bg-primary-600 hover:bg-primary-700 md:py-4 md:text-lg md:px-10"
                 >
                   Get Started
                 </Link>
@@ -147,13 +148,7 @@ const Landing: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white">
-        <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
-          <p className="mt-8 text-center text-base text-gray-400">
-            &copy; 2025 MiniURL, Inc. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

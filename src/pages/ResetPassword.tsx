@@ -11,6 +11,7 @@ import Navbar from "../components/layout/Navbar";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import FormError from "../components/common/FormError";
+import toast from "react-hot-toast";
 
 // TODO: Test this functionality
 const ResetPassword: React.FC = () => {
@@ -25,9 +26,10 @@ const ResetPassword: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
+    mode: "onChange",
   });
 
   const onSubmit = async (data: ResetPasswordFormData) => {
@@ -42,7 +44,11 @@ const ResetPassword: React.FC = () => {
       setIsLoading(true);
       setError(null);
 
-      await authService.resetPassword({ token, newPassword: data.password });
+      const response = await authService.resetPassword({
+        token,
+        newPassword: data.password,
+      });
+      toast.success(response.message, { duration: 3000 });
       setSuccessMessage("Your password has been reset successfully.");
 
       // Navigate to login page after a delay
@@ -131,32 +137,35 @@ const ResetPassword: React.FC = () => {
             </div>
           ) : (
             <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              <div className="rounded-md shadow-sm -space-y-px">
-                <Input
-                  id="password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  placeholder="New password"
-                  {...register("password")}
-                  error={errors.password?.message}
-                />
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  placeholder="Confirm new password"
-                  {...register("confirmPassword")}
-                  error={errors.confirmPassword?.message}
-                />
-              </div>
+              <Input
+                id="password"
+                type="password"
+                autoComplete="new-password"
+                required
+                placeholder="New password"
+                {...register("password")}
+                error={errors.password?.message}
+              />
+              <Input
+                id="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                required
+                placeholder="Confirm new password"
+                {...register("confirmPassword")}
+                error={errors.confirmPassword?.message}
+              />
 
               {error && <FormError error={error} />}
 
               <div>
-                <Button type="submit" isLoading={isLoading}>
-                  Reset Password
+                <Button
+                  type="submit"
+                  isLoading={isLoading}
+                  disabled={isLoading || !isValid}
+                  className="w-full"
+                >
+                  {isLoading ? "Resetting..." : "Reset Password"}
                 </Button>
               </div>
 
