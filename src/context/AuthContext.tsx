@@ -137,6 +137,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         navigate("/dashboard");
       }, 2000);
     } catch (error: Error | any) {
+      console.log(error, "Error in login, AuthContext");
       let errorMessage = "Login failed. Please try again.";
 
       if (error.response) {
@@ -172,7 +173,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         navigate("/login");
       }, 3000);
     } catch (error: Error | any) {
-      console.log(error, "Signup error");
+      console.log(error, "Error in signup, AuthContext");
       let errorMessage = "Signup failed. Please try again.";
 
       if (error.response) {

@@ -13,7 +13,9 @@ export const urlService = {
   /**
    * Create a new short URL
    */
-  createShortUrl: async (urlData: CreateUrlRequest): Promise<ShortUrl> => {
+  createShortUrl: async (
+    urlData: CreateUrlRequest
+  ): Promise<{ message: string; data: ShortUrl }> => {
     const response = await api.post("/api/shorten", urlData);
     return response.data;
   },

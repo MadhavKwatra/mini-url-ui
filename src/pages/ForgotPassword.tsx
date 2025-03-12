@@ -38,11 +38,10 @@ const ForgotPassword: React.FC = () => {
         "If an account with this email exists, we have sent instructions to reset your password."
       );
       toast.success(response.message, { duration: 3000 });
-    } catch (err) {
+    } catch (err: Error | any) {
+      console.log(err, "Error in Forgot Password");
       // We don't show specific errors for security reasons
-      setSuccessMessage(
-        "If an account with this email exists, we have sent instructions to reset your password."
-      );
+      setError(err.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
     }

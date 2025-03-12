@@ -31,6 +31,7 @@ const VerifyEmail: React.FC = () => {
         navigate("/login");
       }, 2000);
     } catch (err: Error | any) {
+      console.log(err, "Error in Verify Email");
       setError(err.response?.data?.message || "Verification failed.");
       toast.error(err.response?.data?.message || "Verification failed.");
     } finally {

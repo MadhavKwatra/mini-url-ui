@@ -8,7 +8,7 @@ import FormError from "../common/FormError";
 import { ShortUrl } from "../../types/url.types";
 
 interface UrlFormProps {
-  onSubmit: (data: CreateUrlFormData) => Promise<ShortUrl>;
+  onSubmit: (data: CreateUrlFormData) => Promise<void>;
   isLoading: boolean;
   error: string | null;
 }
@@ -18,9 +18,10 @@ const UrlForm: React.FC<UrlFormProps> = ({ onSubmit, isLoading, error }) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<CreateUrlFormData>({
     resolver: zodResolver(createUrlSchema),
+    mode: "onChange",
   });
 
   const handleFormSubmit = async (data: CreateUrlFormData) => {
@@ -51,8 +52,13 @@ const UrlForm: React.FC<UrlFormProps> = ({ onSubmit, isLoading, error }) => {
           {...register("customAlias")}
           error={errors.customAlias?.message}
         />
-        <Button type="submit" isLoading={isLoading} className="w-full">
-          Create Short URL
+        <Button
+          type="submit"
+          isLoading={isLoading}
+          disabled={isLoading || !isValid}
+          className="w-full"
+        >
+          {isLoading ? "Creating..." : "Create Short URL"}
         </Button>
       </form>
     </div>

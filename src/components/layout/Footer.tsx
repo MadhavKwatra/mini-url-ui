@@ -3,23 +3,25 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between">
-          <div className="mb-6 md:mb-0">
-            <h3 className="text-lg font-bold mb-2">Mini URL</h3>
-            <p className="text-gray-300 max-w-xs">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Brand Info */}
+          <div>
+            <h3 className="text-xl font-bold">Mini URL</h3>
+            <p className="text-gray-400 mt-2 max-w-sm">
               A simple, fast, and secure URL shortener service to help you share
               links easily.
             </p>
           </div>
 
-          <div className="mb-6 md:mb-0">
-            <h4 className="text-lg font-bold mb-2">Quick Links</h4>
-            <ul className="space-y-2">
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-lg font-semibold">Quick Links</h4>
+            <ul className="mt-2 space-y-2">
               <li>
                 <Link
                   to="/"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition duration-300"
                 >
                   Home
                 </Link>
@@ -27,7 +29,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/login"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition duration-300"
                 >
                   Login
                 </Link>
@@ -35,7 +37,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/signup"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition duration-300"
                 >
                   Sign Up
                 </Link>
@@ -43,13 +45,14 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Legal */}
           <div>
-            <h4 className="text-lg font-bold mb-2">Legal</h4>
-            <ul className="space-y-2">
+            <h4 className="text-lg font-semibold">Legal</h4>
+            <ul className="mt-2 space-y-2">
               <li>
                 <Link
                   to="/terms"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition duration-300"
                 >
                   Terms of Service
                 </Link>
@@ -57,7 +60,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/privacy"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition duration-300"
                 >
                   Privacy Policy
                 </Link>
@@ -66,7 +69,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+        {/* Bottom section */}
+        <div className="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500">
           <p>
             &copy; {new Date().getFullYear()} Mini URL. All rights reserved.
           </p>

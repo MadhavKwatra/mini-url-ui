@@ -8,6 +8,7 @@ import ResetPassword from "../pages/ResetPassword";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import VerifyEmail from "../pages/VerifyEmail";
+import NotFound from "../pages/NotFound";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/auth/reset-password" element={<ResetPassword />} />
       <Route path="/auth/verify-email" element={<VerifyEmail />} />
+      <Route path="*" element={<NotFound />} />
 
       {/* Protected routes */}
       <Route element={<PrivateRoute />}>

@@ -56,6 +56,7 @@ const ResetPassword: React.FC = () => {
         navigate("/login");
       }, 3000);
     } catch (err: any) {
+      console.log(err, "Error in Reset Password");
       setError(
         err.response?.data?.message ||
           "There was an error resetting your password. The token may be invalid or expired."

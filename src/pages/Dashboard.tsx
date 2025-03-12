@@ -20,10 +20,11 @@ const Dashboard: React.FC = () => {
       try {
         setIsLoading(true);
         const data = await urlService.getUserUrls();
+        toast.success("URLs loaded successfully");
         setUrls(data);
         setError(null);
       } catch (err) {
-        console.log(err, "AFter fetchUrl called");
+        console.log(err, "Error loading URLs, Dashboard");
         const error = err as AxiosError;
         if (error.response?.status === 404) {
           setUrls([]);
@@ -47,13 +48,14 @@ const Dashboard: React.FC = () => {
     try {
       setIsCreating(true);
       setError(null);
-      const newUrl = await urlService.createShortUrl({
+      const response = await urlService.createShortUrl({
         originalUrl: data.originalUrl,
         customAlias: data.customAlias,
       });
-      console.log(newUrl, "NewURl returned from service");
+      toast.success("URL created successfully");
+      console.log(response, "NewURl returned from service");
+      const newUrl = response.data;
       setUrls((prevUrls) => [newUrl, ...prevUrls]);
-      return newUrl;
     } catch (err: any) {
       console.error("Error creating URL:", err);
       setError(
